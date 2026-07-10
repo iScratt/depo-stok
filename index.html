@@ -27,6 +27,15 @@ window.FIREBASE_CONFIG = {
 </head>
 <body>
 <div id="root"></div>
+<script>
+window.addEventListener("error", function (ev) {
+  var r = document.getElementById("root");
+  if (r && !r.hasChildNodes()) {
+    var msg = ev && ev.message ? ev.message : "bilinmeyen hata";
+    r.innerHTML = '<div style="font-family:system-ui;padding:24px;max-width:560px;margin:40px auto;background:#fff;border:1px solid #fecaca;border-radius:16px;color:#b91c1c"><b>Uygulama hatas\u0131</b><div style="margin-top:8px;font-size:13px;color:#334155">' + msg + '</div><div style="margin-top:8px;font-size:12px;color:#94a3b8">Bu ekran\u0131n g\u00f6r\u00fcnt\u00fcs\u00fcn\u00fc Claude\'a g\u00f6nderin.</div></div>';
+  }
+});
+</script>
 <script src="./app.js"></script>
 </body>
 </html>
