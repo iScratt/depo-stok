@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Depo Stok Takip</title>
+<meta name="description" content="Merkez, Bandırma ve Aydın depolarını tek sistemde, anlık olarak yöneten stok takip uygulaması."/>
+<meta name="theme-color" content="#047857"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%A6%3C/text%3E%3C/svg%3E"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --emerald-700:#047857; --emerald-600:#059669; --emerald-400:#34d399; --emerald-50:#ecfdf5;
+    --stone-100:#f5f5f4; --stone-200:#e7e5e4; --stone-300:#d6d3d1;
+    --slate-900:#0f172a; --slate-600:#475569; --slate-400:#94a3b8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Manrope',system-ui,sans-serif;background:var(--stone-100);color:var(--slate-900);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:640px;margin:0 auto;padding:0 22px}
+
+  /* ---- Hero ---- */
+  .hero{background:linear-gradient(165deg,var(--emerald-700),#065f46);padding:56px 0 44px;text-align:center;color:#fff}
+  .badge{width:60px;height:60px;border-radius:18px;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+  .badge svg{width:28px;height:28px}
+  .eyebrow{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:rgba(255,255,255,.75);margin:0 0 14px}
+  h1{font-size:clamp(26px,6vw,38px);line-height:1.18;font-weight:800;margin:0 0 14px;letter-spacing:-.01em}
+  .hero p{font-size:16px;line-height:1.6;color:rgba(255,255,255,.88);max-width:440px;margin:0 auto 30px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 26px;border-radius:14px;font-weight:800;font-size:15px;text-decoration:none;border:none;cursor:pointer}
+  .btn-light{background:#fff;color:var(--emerald-700)}
+  .btn-light:focus-visible,.btn-dark:focus-visible{outline:3px solid var(--emerald-400);outline-offset:2px}
+
+  /* signature: canlı 3-depo senkron şeridi */
+  .sync{display:flex;align-items:center;justify-content:center;gap:0;margin-top:38px;flex-wrap:nowrap}
+  .depot{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:8px 14px;border-radius:999px;font-size:12.5px;font-weight:800;white-space:nowrap;color:#fff}
+  .dot{width:7px;height:7px;border-radius:999px;background:var(--emerald-400);animation:pulse 2s ease-in-out infinite}
+  .line{width:26px;height:1px;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.65) 0 5px,transparent 5px 11px);animation:flow 1.1s linear infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,.65)}50%{box-shadow:0 0 0 5px rgba(52,211,153,0)}}
+  @keyframes flow{from{background-position:0 0}to{background-position:16px 0}}
+  .synclabel{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);margin-top:12px}
+
+  /* ---- Body sections ---- */
+  section.pad{padding:40px 0}
+  .lead{font-size:15px;line-height:1.7;color:var(--slate-600);text-align:center;margin:0 auto;max-width:520px}
+  h2{font-size:20px;font-weight:800;margin:0 0 16px;letter-spacing:-.005em}
+
+  .card{background:#fff;border:1px solid var(--stone-200);border-radius:20px;box-shadow:0 1px 2px rgba(15,23,42,.04);overflow:hidden}
+  .frow{display:flex;gap:13px;align-items:flex-start;padding:16px 18px;border-bottom:1px solid var(--stone-200)}
+  .frow:last-child{border-bottom:none}
+  .ficon{width:38px;height:38px;border-radius:11px;background:var(--emerald-50);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .ficon svg{width:19px;height:19px;stroke:var(--emerald-700)}
+  .ftitle{font-size:14.5px;font-weight:800;color:var(--slate-900);margin:0 0 2px}
+  .fdesc{font-size:13px;line-height:1.55;color:var(--slate-400);margin:0}
+
+  .steps{display:flex;flex-direction:column;gap:14px;margin:0}
+  .step{display:flex;gap:13px;align-items:flex-start}
+  .stepno{width:26px;height:26px;border-radius:999px;background:var(--emerald-700);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .steptext{font-size:14.5px;line-height:1.55;color:var(--slate-600);padding-top:3px}
+  .steptext b{color:var(--slate-900)}
+
+  .cta-final{text-align:center;padding:8px 0 48px}
+  .btn-dark{background:var(--emerald-700);color:#fff}
+
+  footer{text-align:center;padding:24px 22px 40px;font-size:12.5px;color:var(--slate-400);line-height:1.6}
+
+  @media (max-width:380px){
+    .depot{padding:7px 10px;font-size:11.5px}
+    .line{width:16px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .dot,.line{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M16.5 9.4 7.5 4.2"></path>
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+        <polyline points="3.29 7 12 12 20.71 7"></polyline>
+        <line x1="12" y1="22" x2="12" y2="12"></line>
+      </svg>
+    </div>
+    <p class="eyebrow">Merkez · Bandırma · Aydın</p>
+    <h1>Depodaki her hareket,<br/>anında görünür.</h1>
+    <p>Üç depo, tek uygulama. Giriş, çıkış, SKT ve sayım kayıtları eş zamanlı işlenir — kağıda ihtiyaç kalmaz.</p>
+    <a class="btn btn-light" href="index.html">
+      Uygulamayı Aç
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
+
+    <div class="sync" aria-hidden="true">
+      <span class="depot"><span class="dot"></span>Merkez</span>
+      <span class="line"></span>
+      <span class="depot"><span class="dot"></span>Bandırma</span>
+      <span class="line"></span>
+      <span class="depot"><span class="dot"></span>Aydın</span>
+    </div>
+    <p class="synclabel">ÜÇÜ DE CANLI, ÜÇÜ DE EŞ ZAMANLI</p>
+  </div>
+</div>
+
+<section class="pad">
+  <div class="wrap">
+    <p class="lead">Depo Stok Takip, kurumsal mutfak ve depo operasyonlarını üç lokasyonda tek sistemde toplayan bir stok yönetim aracıdır. Depoda çalışan herkes kendi telefonundan giriş ve çıkışları kaydeder; yöneticiler tüm depoları anlık olarak izler.</p>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <h2>Uygulama neler yapıyor?</h2>
+    <div class="card">
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div>
+        <div><p class="ftitle">Üç Depo, Ayrı Ayrı</p><p class="fdesc">Merkez, Bandırma ve Aydın stokları birbirinden bağımsız tutulur; yöneticiler istediğinde tek ekranda toplar.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg></div>
+        <div><p class="ftitle">Anlık Senkron</p><p class="fdesc">Bir cihazda kaydedilen hareket, saniyeler içinde diğer tüm cihazlarda görünür.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+        <div><p class="ftitle">SKT Takibi</p><p class="fdesc">Son kullanma tarihi yaklaşan ürünler otomatik listelenir, hiçbiri gözden kaçmaz.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 7 3 3 7 3"></polyline><polyline points="17 3 21 3 21 7"></polyline><polyline points="21 17 21 21 17 21"></polyline><polyline points="7 21 3 21 3 17"></polyline><line x1="7" y1="12" x2="17" y2="12"></line></svg></div>
+        <div><p class="ftitle">Barkod ile Bul</p><p class="fdesc">Telefon kamerasıyla barkod okutup ürüne saniyede ulaşın.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4.5H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-13a2 2 0 0 0-2-2h-2"></path><rect x="8" y="2.5" width="8" height="4" rx="1"></rect><polyline points="8.5 13 10.5 15 15.5 10.5"></polyline></svg></div>
+        <div><p class="ftitle">Ay Sonu Sayımı</p><p class="fdesc">Beklenen stok ile fiziksel sayım karşılaştırılır, fark tek dokunuşla düzeltilir.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+        <div><p class="ftitle">Sipariş Önerisi</p><p class="fdesc">Kritik seviyeye düşen ürünler otomatik listelenir, sipariş listesi hazır olur.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div>
+        <div><p class="ftitle">Fiyat &amp; Depo Değeri</p><p class="fdesc">Ürün fiyatları girilir; toplam depo değerini yalnızca yönetici ve izleyici görür.</p></div>
+      </div>
+
+      <div class="frow">
+        <div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+        <div><p class="ftitle">Rol Bazlı Yetki</p><p class="fdesc">Depocu yalnızca kendi deposunu işler, izleyici sadece görür, yönetici tümünü yönetir.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="pad" style="padding-top:0">
+  <div class="wrap">
+    <h2>Nasıl erişirim?</h2>
+    <div class="steps">
+      <div class="step"><span class="stepno">1</span><p class="steptext">Kullanıcı adınızı ve şifrenizi <b>yöneticinizden</b> alın.</p></div>
+      <div class="step"><span class="stepno">2</span><p class="steptext">Aşağıdaki <b>Uygulamayı Aç</b> düğmesine dokunun.</p></div>
+      <div class="step"><span class="stepno">3</span><p class="steptext">Bilgilerinizle giriş yapın. Kalıcı olsun isterseniz tarayıcı menüsünden <b>ana ekrana ekleyin</b>.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-final">
+  <a class="btn btn-dark" href="index.html">
+    Uygulamayı Aç
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+  </a>
+</div>
+
+<footer>
+  <!-- Bu iki satırı dilediğiniz gibi düzenleyebilirsiniz -->
+  İç kullanım içindir.<br/>
+  Erişim veya şifre ile ilgili sorularınız için yöneticinize ulaşın.
+</footer>
+
+</body>
+</html>
