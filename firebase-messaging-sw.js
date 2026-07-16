@@ -21,17 +21,18 @@ if (firebaseConfig.apiKey) {
   const messaging = firebase.messaging();
 
   messaging.onBackgroundMessage((payload) => {
-    const title = (payload.notification && payload.notification.title) || "Depo Stok Takip";
-    const body = (payload.notification && payload.notification.body) || "";
-    const link = (payload.fcmOptions && payload.fcmOptions.link)
-      || (payload.data && payload.data.link)
-      || "./index.html";
+    const d = payload.data || {};
+    const n = payload.notification || {};
+    const title = d.title || n.title || "Depo Stok Takip";
+    const body = d.body || n.body || "";
+    const link = d.link || (payload.fcmOptions && payload.fcmOptions.link) || "./index.html";
     self.registration.showNotification(title, {
       body,
       icon: "./icon-192.png",
       badge: "./icon-192.png",
       data: { url: link },
-      tag: (payload.data && payload.data.tag) || undefined
+      tag: d.tag || undefined,
+      renotify: false
     });
   });
 }
