@@ -23,7 +23,7 @@ if (firebaseConfig.apiKey) {
   messaging.onBackgroundMessage((payload) => {
     const d = payload.data || {};
     const n = payload.notification || {};
-    const title = d.title || n.title || "Depo Stok Takip";
+    const title = d.title || n.title || "Ambar";
     const body = d.body || n.body || "";
     const link = d.link || (payload.fcmOptions && payload.fcmOptions.link) || "./index.html";
     self.registration.showNotification(title, {

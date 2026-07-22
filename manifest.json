@@ -1,7 +1,7 @@
 {
-  "name": "Depo Stok Takip — Lezzet Sofrası Catering",
-  "short_name": "Depo Stok",
-  "description": "Lezzet Sofrası Catering — Merkez, Bandırma ve Aydın depo ve stok takip sistemi",
+  "name": "Ambar — Depo & Stok Yönetimi",
+  "short_name": "Ambar",
+  "description": "Ambar — çok depolu stok takip ve depo yönetim sistemi",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
@@ -9,8 +9,23 @@
   "theme_color": "#047857",
   "lang": "tr",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
